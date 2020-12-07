@@ -74,7 +74,7 @@ CREATE TABLE `interest` (
 
 LOCK TABLES `interest` WRITE;
 /*!40000 ALTER TABLE `interest` DISABLE KEYS */;
-INSERT INTO `interest` VALUES ('user2',3,50,0),('user2',4,64,0);
+INSERT INTO `interest` VALUES ('user1',3,50,0),('user1',4,85,0),('user2',3,50,0),('user2',4,64,0);
 /*!40000 ALTER TABLE `interest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +128,7 @@ CREATE TABLE `music` (
   KEY `MUSIC_MANAGER` (`MUSIC_MANAGER`),
   CONSTRAINT `music_ibfk_1` FOREIGN KEY (`MUSIC_SINGER`) REFERENCES `singer` (`SINGER_ID`),
   CONSTRAINT `music_ibfk_2` FOREIGN KEY (`MUSIC_MANAGER`) REFERENCES `manager` (`MANAGER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,7 +137,7 @@ CREATE TABLE `music` (
 
 LOCK TABLES `music` WRITE;
 /*!40000 ALTER TABLE `music` DISABLE KEYS */;
-INSERT INTO `music` VALUES (3,'Night_Letter','Ballade','IU','IU','EDAM','admin1','IU'),(4,'1','1','1','1','1','admin1','BTS');
+INSERT INTO `music` VALUES (3,'Night_Letter','Ballade','IU','IU','EDAM','admin1','IU'),(4,'1','1','1','1','1','admin1','BTS'),(7,'Good_Day','POP','IU','IU','EDAM','admin1','IU'),(8,'eight','POP','IU','IU','EDAM','admin1','IU'),(9,'Love_Poem','POP','IU','IU','EDAM','admin1','IU'),(10,'Palette','POP','IU','IU','EDAM','admin1','IU');
 /*!40000 ALTER TABLE `music` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +164,7 @@ CREATE TABLE `music_in_playlist` (
 
 LOCK TABLES `music_in_playlist` WRITE;
 /*!40000 ALTER TABLE `music_in_playlist` DISABLE KEYS */;
-INSERT INTO `music_in_playlist` VALUES (8,4);
+INSERT INTO `music_in_playlist` VALUES (8,4),(9,4);
 /*!40000 ALTER TABLE `music_in_playlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +181,7 @@ CREATE TABLE `playlist` (
   PRIMARY KEY (`PLAYLIST_NUM`),
   KEY `PLAYLIST_USER` (`PLAYLIST_USER`),
   CONSTRAINT `playlist_ibfk_1` FOREIGN KEY (`PLAYLIST_USER`) REFERENCES `user` (`USER_ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +190,7 @@ CREATE TABLE `playlist` (
 
 LOCK TABLES `playlist` WRITE;
 /*!40000 ALTER TABLE `playlist` DISABLE KEYS */;
-INSERT INTO `playlist` VALUES ('user2',7),('user2',8);
+INSERT INTO `playlist` VALUES ('user1',9),('user2',7),('user2',8);
 /*!40000 ALTER TABLE `playlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,7 +248,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('sunghunchoi','tjdgns0727','Sunghun','2000-07-27','Seoul','010-5242-8770','2020-12-07','admin1'),('user2','user2','User2','1978-05-21','Jeju','010-5623-8956','2020-12-07','admin1');
+INSERT INTO `user` VALUES ('sunghunchoi','tjdgns0727','Sunghun','2000-07-27','Seoul','010-5242-8770','2020-12-07','admin1'),('user1','user1','user1','2000-06-21','Busan','010-8956-5623','2020-12-07','admin1'),('user2','user2','User2','1978-05-21','Jeju','010-5623-8956','2020-12-07','admin1');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -261,4 +261,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-07 19:20:44
+-- Dump completed on 2020-12-07 23:05:23

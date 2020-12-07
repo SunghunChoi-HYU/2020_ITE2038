@@ -59,8 +59,7 @@ public class album {
 										System.out.println("0. Return to previous menu"); // manager menu
 										System.out.println("1. Manages User");
 										System.out.println("2. Manages Music");
-										System.out.println("3. Manages Playlist");
-										System.out.println("4. See statistics");
+										System.out.println("3. See statistics");
 										int choice5 = scan.nextInt();
 										if(choice5 == 0)
 											break;
@@ -92,7 +91,7 @@ public class album {
 													}
 												}
 												else if(choice6 == 2) { // DELETE USER
-													System.out.print("Please type user id that you want to delete");
+													System.out.print("Please type user id that you want to delete : ");
 													String userid = scan.next();
 													sql = "Select * from user where USER_ID = ?";
 													pstmt = con.prepareStatement(sql);
@@ -128,7 +127,7 @@ public class album {
 													sql = "SELECT MUSIC_NUM, MUSIC_TITLE, MUSIC_GENRE, MUSIC_COMP, MUSIC_LYRICIST, MUSIC_COMPANY, MUSIC_SINGER FROM MUSIC";
 													pstmt = con.prepareStatement(sql);
 													rs = pstmt.executeQuery();
-													System.out.printf("%10s, %30s, %30s, %30s, %30s, %30s, %30s\n", "MUISC_NUM", "MUSIC_TITLE", "MUSIC_GENRE", "MUSIC_COMP", "MUSIC_LYRICIST", "MUSIC_COMPANY", "MUSIC_SINGER");
+													System.out.printf("%10s, %30s, %30s, %30s, %30s, %30s, %30s\n", "MUSIC_NUM", "MUSIC_TITLE", "MUSIC_GENRE", "MUSIC_COMP", "MUSIC_LYRICIST", "MUSIC_COMPANY", "MUSIC_SINGER");
 													while(rs.next()) {
 														int musicnum = rs.getInt("MUSIC_NUM");
 														String musictitle = rs.getString("MUSIC_TITLE");
@@ -165,7 +164,7 @@ public class album {
 													pstmt.executeUpdate();
 												}
 												else if(choice6 == 3) { // DELETE MUSIC
-													System.out.print("Please type music title that you want to delete");
+													System.out.print("Please type music title that you want to delete : ");
 													String musictitle = scan.next();
 													sql = "Select * from music where MUSIC_TITLE = ?";
 													pstmt = con.prepareStatement(sql);
@@ -185,49 +184,8 @@ public class album {
 													System.out.println("Please check your input! Your input is invalid");
 											}
 										}
-										else if(choice5 == 3) { //Manage playlist
-											
-											while(true) {
-												System.out.println("------------------------------------------");
-												System.out.println("0. Return to previous menu");
-												System.out.println("1. List All Playlist");
-												System.out.println("2. Delete Playlist");
-												int choice7 = scan.nextInt();
-												if(choice7 == 0)
-													break;
-												else if(choice7 == 1) {
-													sql = "SELECT * FROM PLAYLIST";
-													pstmt = con.prepareStatement(sql);
-													rs = pstmt.executeQuery();
-													System.out.printf("%10s, %30s\n", "PLAYLIST_NUM", "USER_ID");
-													while(rs.next()) {
-														int playlist = rs.getInt("PLAYLIST_NUM");
-														String userid = rs.getString("USER_ID");
-														System.out.printf("%10s, %30d \n", playlist, userid);
-													}
-												}
-												else if(choice7 == 2) {
-													System.out.print("Please type playlist number that you want to delete");
-													String playlistnum = scan.next();
-													sql = "Select * from playlist where PLAYLIST_NUM = ?";
-													pstmt = con.prepareStatement(sql);
-													pstmt.setString(1,  playlistnum);
-													rs = pstmt.executeQuery();
-													if(!rs.next()) {
-														System.out.println("There is no such playlist.");
-													}
-													else {
-														sql = "Delete from playlist where PLAYLIST_NUM =  ?";
-														pstmt = con.prepareStatement(sql);
-														pstmt.setString(1, playlistnum);
-														pstmt.executeUpdate();
-													}
-												}
-												else
-													System.out.println("Please check your input! Your input is invalid");
-											}
-										}
-										else if(choice5 == 4) {
+										
+										else if(choice5 == 3) {
 											while(true) {
 												System.out.println("------------------------------------------");
 												System.out.println("0. Return to previous menu");
@@ -387,11 +345,11 @@ public class album {
 														System.out.printf("%10d, %30s, %30s, %30s, %30s, %30s, %30s\n", musicnum, musictitle, musicgenre, musiccomp, musiclyric, musiccompany, musicsinger);
 													}
 												}
-												System.out.print("Type Music number you want to add");
+												System.out.print("Type Music number you want to add : ");
 												int MUSIC_NUM = scan.nextInt();
-												System.out.print("Type the Playlist number that your wanted music to be in");
+												System.out.print("Type the Playlist number that your wanted music to be in : ");
 												String PLAYLIST_NUM = scan.next();
-												System.out.print("Please type your interest (in percentage without %)");
+												System.out.print("Please type your interest (in percentage without %) : ");
 												int interest = scan.nextInt();
 												sql = "INSERT IGNORE INTO MUSIC_IN_PLAYLIST VALUES (?,?)";
 												pstmt = con.prepareStatement(sql);
@@ -428,7 +386,7 @@ public class album {
 										System.out.println("4. Delete musics in your playlist");
 										int choice9 = scan.nextInt();
 										if(choice9 == 1) {
-											sql = "UPDATE INTEREST, PLAYLIST, MUSIC_IN_PLAYLIST SET STREAMING = STREAMING + 1 WHERE USER = ? AND PLAYLIST_USER = ? AND MUSIC = IN_MUSIC";
+											sql = "UPDATE INTEREST, PLAYLIST, MUSIC_IN_PLAYLIST SET STREAMING = STREMAING + 1 WHERE USER = ? AND PLAYLIST_USER = ? AND MUSIC = IN_MUSIC";
 											pstmt = con.prepareStatement(sql);
 											pstmt.setString(1, ID);
 											pstmt.setString(2, ID);
@@ -451,9 +409,29 @@ public class album {
 											pstmt = con.prepareStatement(sql);
 											pstmt.setString(1, ID);
 											pstmt.executeUpdate();
+											sql = "SELECT PLAYLIST_NUM FROM PLAYLIST WHERE PLAYLIST_USER = ?";
+											pstmt = con.prepareStatement(sql);
+											pstmt.setString(1, ID);
+											rs = pstmt.executeQuery();
+											System.out.println("Here is your playlist(s)");
+											System.out.println("PLAYLIST_NUMBER");
+											while(rs.next()) {
+												String PLAYLIST_NUMBER = rs.getString("PLAYLIST_NUM");
+												System.out.println(PLAYLIST_NUMBER);
+											}
 										}
 										else if(choice9 == 3) {
-											System.out.print("Please type Playlist number that you want to delete");
+											sql = "SELECT PLAYLIST_NUM FROM PLAYLIST WHERE PLAYLIST_USER = ?";
+											pstmt = con.prepareStatement(sql);
+											pstmt.setString(1, ID);
+											rs = pstmt.executeQuery();
+											System.out.println("Here is your playlist(s)");
+											System.out.println("PLAYLIST_NUMBER");
+											while(rs.next()) {
+												String PLAYLIST_NUMBER = rs.getString("PLAYLIST_NUM");
+												System.out.println(PLAYLIST_NUMBER);
+											}
+											System.out.print("Please type Playlist number that you want to delete : ");
 											int playlist_num = scan.nextInt();
 											sql = "DELETE FROM PLAYLIST WHERE PLAYLIST_NUM = ? AND PLAYLIST_USER = ?";
 											pstmt = con.prepareStatement(sql);
@@ -462,6 +440,16 @@ public class album {
 											pstmt.executeQuery();
 										}
 										else if(choice9 == 4) {
+											sql = "SELECT MUSIC_IN_PLAYLIST.PLAYLIST_NUM, MUSIC_TITLE FROM MUSIC_IN_PLAYLIST, PLAYLIST, MUSIC WHERE PLAYLIST.PLAYLIST_USER = ? AND MUSIC_NUM = IN_MUSIC";
+											pstmt = con.prepareStatement(sql);
+											pstmt.setString(1,ID);
+											rs = pstmt.executeQuery();
+											System.out.printf("%10s, %30s\n", "PLAYLIST_NUMBER", "MUSIC_TITLE");
+											while(rs.next()) {
+												int Playlist_number = rs.getInt(1);
+												String music_title = rs.getString(2);
+												System.out.printf("%10d, %30s\n", Playlist_number, music_title);
+											}
 											System.out.print("Please type Playlistnumber that includes music that you want to delete. : ");
 											int playlist_number = scan.nextInt();
 											sql = "SELECT IN_MUSIC, MUSIC_TITLE FROM MUSIC_IN_PLAYLIST, MUSIC WHERE PLAYLIST_NUM = ? AND MUSIC_NUM = IN_MUSIC";
@@ -469,13 +457,14 @@ public class album {
 											pstmt.setInt(1, playlist_number);
 											rs = pstmt.executeQuery();
 											System.out.println("Here is list of your musics in number " + playlist_number + " playlist");
+											System.out.printf("%10s, %30s\n", "MUSIC_NUMBER", "MUSIC_TITLE");
 											while(rs.next()) {
 												int music_number = rs.getInt(1);
 												String Music_title = rs.getString(2);
 												System.out.printf("%10d", music_number);
 												System.out.printf("%30s \n", Music_title);
 											}
-											System.out.print("Please type the music number you want to delete");
+											System.out.print("Please type the music number you want to delete : ");
 											int music_number = scan.nextInt();
 											sql = "DELETE FROM MUSIC_IN_PLAYLIST WHERE PLAYLIST_NUM = ? AND IN_MUSIC = ?";
 											pstmt = con.prepareStatement(sql);
@@ -569,6 +558,7 @@ public class album {
 										pstmt = con.prepareStatement(sql);
 										pstmt.setString(1,  ID);
 										rs = pstmt.executeQuery();
+										System.out.println("LIST OF YOUR FANS");
 										while(rs.next()) {
 											String fan_ID = rs.getString("USER");
 											System.out.println(fan_ID);
@@ -581,15 +571,15 @@ public class album {
 										if(choice4 == 1) { // ADD MUSIC_SINGER
 											System.out.print("Please type your music title : ");
 											String music_title = scan.next();
-											System.out.print("Please type your music genre");
+											System.out.print("Please type your music genre : ");
 											String music_genre = scan.next();
-											System.out.print("Please type your music composer");
+											System.out.print("Please type your music composer : ");
 											String music_comp = scan.next();
-											System.out.print("Please type your music lyricist");
+											System.out.print("Please type your music lyricist : ");
 											String music_lyric = scan.next();
-											System.out.print("Please type your company");
+											System.out.print("Please type your company : ");
 											String music_company = scan.next();
-											System.out.print("Please type your musics manager ID");
+											System.out.print("Please type your musics manager ID : ");
 											String manager = scan.next();
 											sql = "Insert into music (MUSIC_TITLE, MUSIC_GENRE, MUSIC_COMP, MUSIC_LYRICIST, MUSIC_COMPANY, MUSIC_MANAGER, MUSIC_SINGER) values (?, ?,?, ?, ?, ?, ?)";
 											pstmt = con.prepareStatement(sql);
