@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.sql.*;
 
-public class Hello {
+public class album {
 
 	public static void main(String[] args) {
 		Connection con;
